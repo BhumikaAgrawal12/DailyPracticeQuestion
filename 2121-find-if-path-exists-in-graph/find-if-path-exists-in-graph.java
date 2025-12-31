@@ -1,31 +1,47 @@
-//dfs 
 class Solution {
     public boolean validPath(int n, int[][] edges, int source, int destination) {
-         ArrayList<List<Integer>>adj=new ArrayList<>();
-        for(int i=0;i<n;i++){
-            adj.add(new ArrayList<>());
-        }
+        UnionFind uf=new UnionFind(n);
         for(int[] edge:edges){
             int u=edge[0];
             int v=edge[1];
-            adj.get(u).add(v);
-            adj.get(v).add(u);
+            uf.Union(u,v);
         }
-        int[] visited=new int[n];
-        return dfs(adj,visited,source,destination);
+        return uf.find(source)==uf.find(destination);
     }
-    boolean dfs(ArrayList<List<Integer>>adj,int[] visited,int node,int dest){
-        if(node==dest){
-            return true;
+}
+class UnionFind{
+    int[] parent;
+    int[] rank;
+    UnionFind(int V){
+        parent=new int[V+1];
+        rank=new int[V+1];
+        for(int i=0;i<=V;i++){
+            parent[i]=i;
         }
-        visited[node]=1;
-        for(int nbr:adj.get(node)){
-            if(visited[nbr]==0){
-                if(dfs(adj,visited,nbr,dest)){
-                    return true;
-                }
-            }
-        }
-        return false;
     }
+    int find(int node){
+        if(parent[node]==node){
+            return node;
+        }
+        return find(parent[node]);
+    }
+    boolean Union(int u,int v){
+        int parent_u=find(u);
+        int parent_v=find(v);
+        if(parent_u==parent_v){
+            return false;
+        }
+        if(rank[parent_u]>rank[parent_v]){
+            parent[parent_v]=parent_u;
+        }
+        else if(rank[parent_v]>rank[parent_u]){
+            parent[parent_u]=parent_v;
+        }
+        else{
+            parent[parent_u]=parent_v;
+            rank[parent_v]++;
+        }
+        return true;
+    }
+    
 }
