@@ -20,6 +20,7 @@ class Solution {
             int[] val=pq.poll();
             int u=val[0];
             int w=val[1];
+            if(w>dist[u]) continue;
             for(int[] nbr:adj.get(u)){
                 int v=nbr[0];
                 int wt=nbr[1];
