@@ -1,22 +1,60 @@
 class Solution {
     public int findCircleNum(int[][] isConnected) {
         int n=isConnected.length;
-        boolean[] visited=new boolean[n];
+        UnionFind uf=new UnionFind(n);
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                if(isConnected[i][j]==1){
+                    uf.union(i,j);
+                }
+            }
+        }
         int count=0;
         for(int i=0;i<n;i++){
-            if(!visited[i]){
+            if(uf.find(i)==i){
                 count++;
-                dfs(isConnected,visited,n,i);
             }
         }
         return count;
     }
-    public void dfs(int[][] isConnected,boolean[] visited,int n,int node){
-        visited[node]=true;
-        for(int i=0;i<n;i++){
-            if(isConnected[node][i]==1 && !visited[i]){
-                dfs(isConnected,visited,n,i);
-            }
+}
+class UnionFind{ 
+    int[] parent;
+    int[] rank;
+    UnionFind(int V){
+        parent=new int[V+1];
+        rank=new int[V+1];
+
+        for(int i=0;i<=V;i++){
+            parent[i]=i;      //initially hr node k liye whi uska parent hoga
         }
+    }
+   //This find function is searching for the leader(root node) of the current node.
+    int find(int node){
+        if(parent[node]==node){
+            return node;
+        }
+        return find(parent[node]);
+    }
+    boolean union(int u,int v){
+        int parent_u=find(u);
+        int parent_v=find(v);
+
+        if(parent_u==parent_v){
+            return false;
+        }
+
+        if(rank[parent_u]>rank[parent_v]){   //rank of u>rank of v
+            parent[parent_v]=parent_u;
+        }
+        else if(rank[parent_v]>rank[parent_u]){  //rank of v>rank of u
+            parent[parent_u]=parent_v;
+        }
+        else{                            //(rank of u==rank of v)
+            parent[parent_v]=parent_u;  //agr dono ki rank same hai toh mene u ko v ka parent bna diya
+            rank[parent_u]++;          //rank of u will increase.
+        }                  
+        return true;
+
     }
 }
