@@ -1,41 +1,37 @@
 class Solution {
-    public boolean canFinish(int n, int[][] prerequisites) {
-        //TOPOLOGICAL SORT(BFS+INDEGREE)-->DIRECTLY LGAYA HAI
-        List<Integer>[] adj = new List[n];
-        int[] indegree = new int[n];
-        List<Integer> ans = new ArrayList<>();
-
-        for (int[] pair : prerequisites) {
-            int course = pair[0];
-            int prerequisite = pair[1];
-            if (adj[prerequisite] == null) {
-                adj[prerequisite] = new ArrayList<>();
-            }
-            adj[prerequisite].add(course);
-            indegree[course]++;
+    public boolean canFinish(int V, int[][] edges) {
+       List<List<Integer>>adj=new ArrayList<>();
+        for(int i=0;i<V;i++){
+            adj.add(new ArrayList<>());
         }
-
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < n; i++) {
-            if (indegree[i] == 0) {
-                queue.offer(i);
+        for(int[] edge:edges){
+            int u=edge[0];
+            int v=edge[1];
+            adj.get(u).add(v);
+        }
+        int[] indegree=new int[V];
+        for(int i=0;i<V;i++){
+            for(int nbr:adj.get(i)){
+                indegree[nbr]++;
             }
         }
-
-        while (!queue.isEmpty()) {
-            int current = queue.poll();
-            ans.add(current);
-
-            if (adj[current] != null) {
-                for (int next : adj[current]) {
-                    indegree[next]--;
-                    if (indegree[next] == 0) {
-                        queue.offer(next);
-                    }
+        Queue<Integer>q=new LinkedList<>();
+        for(int i=0;i<V;i++){
+            if(indegree[i]==0){
+                q.offer(i);
+            }
+        }
+        ArrayList<Integer>ans=new ArrayList<>();
+        while(!q.isEmpty()){
+            int node=q.poll();
+            ans.add(node);
+            for(int nbr:adj.get(node)){
+                indegree[nbr]--;
+                if(indegree[nbr]==0){
+                    q.offer(nbr);
                 }
             }
         }
-
-        return ans.size() == n;
+        return ans.size()==V;
     }
 }
