@@ -1,11 +1,10 @@
 class Solution {
     public int distributeCandies(int[] candyType) {
         int n=candyType.length;
-        HashSet<Integer> set=new HashSet<>();
-        for(int i=0;i<candyType.length;i++){
-            set.add(candyType[i]);
+        HashMap<Integer,Integer>map=new HashMap<>();
+        for(int i=0;i<n;i++){
+            map.put(candyType[i],map.getOrDefault(candyType[i],0)+1);
         }
-        int hlf=n/2;
-        return Math.min(hlf,set.size());
+        return Math.min(map.size(),n/2);
     }
 }
