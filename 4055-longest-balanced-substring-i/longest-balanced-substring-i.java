@@ -24,10 +24,8 @@ class Solution {
     public boolean check(HashMap<Character,Integer> map){
          if (map.size() <= 1) return true;
 
-        // First value store karo
         int firstValue = map.values().iterator().next();
 
-        // Sab values compare karo
         for (int value : map.values()) {
             if (value != firstValue) {
                 return false;
