@@ -3,14 +3,15 @@ class Solution {
         int n=nums.length;
         Set<Integer> set=new HashSet<>();
         for(int i=0;i<n;i++){
-            if(i>k){
-                set.remove(nums[i-k-1]);
-            }
-            if(!set.add(nums[i])){
+            if(set.contains(nums[i])){
                 return true;
             }
-            
-        }   
-        return false;   
+            set.add(nums[i]);
+            if(set.size()>k){
+                set.remove(nums[i-k]);
+            }
+
+        }
+        return false;
     }
 }
