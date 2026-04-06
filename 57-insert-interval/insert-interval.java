@@ -1,10 +1,8 @@
 class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
-        int n=intervals.length;
         List<int[]> res=new ArrayList<>();
-        
         for(int[] slot:intervals){
-            if(slot[0]>newInterval[1]){
+            if(newInterval[1]<slot[0]){
                 res.add(newInterval);
                 newInterval=slot;
             }
