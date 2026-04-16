@@ -17,15 +17,15 @@ class Solution {
     static int cnt;
     public int countNodes(TreeNode root) {
         cnt=0;
-        helper(root);
+        preorder(root);
         return cnt;
     }
-    public static void helper(TreeNode root){
+    public static void preorder(TreeNode root){
         if(root==null){
             return;
         }
         cnt++;
-        helper(root.left);
-        helper(root.right);
+        preorder(root.left);
+        preorder(root.right);
     }
 }
