@@ -12,13 +12,13 @@ class Solution {
                 }
                 else{
                     ans+=leftmax-height[start];
-
                 }
                 start++;
             }
             else{
                 if(height[end]>rightmax){
                     rightmax=height[end];
+
                 }
                 else{
                     ans+=rightmax-height[end];
