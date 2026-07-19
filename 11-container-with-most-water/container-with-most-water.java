@@ -1,9 +1,9 @@
 class Solution {
     public int maxArea(int[] height) {
-        int maxArea=0;
         int s=0;
         int e=height.length-1;
         int area=1;
+        int maxArea=0;
         while(s<e){
             if(height[s]<height[e]){
                 area=height[s]*(e-s);
