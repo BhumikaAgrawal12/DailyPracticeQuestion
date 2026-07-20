@@ -16,6 +16,6 @@ class Solution {
             }
         }
         res.add(newInterval);
-        return res.toArray(new int[res.size()][]);
+        return res.toArray(int[][]::new);
     }
 }
