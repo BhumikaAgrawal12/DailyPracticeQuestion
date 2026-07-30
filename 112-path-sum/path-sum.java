@@ -19,19 +19,19 @@ class Solution {
             return false;
         }
         int sum=0;
-        return check(root,sum,targetSum);
+        return pathSum(root,targetSum,sum);
     }
-    public boolean check(TreeNode root,int sum,int target){
+    boolean pathSum(TreeNode root,int targetSum,int sum){
         if(root==null){
             return false;
         }
         sum+=root.val;
-        if(sum==target && root.left==null && root.right==null){
+        if(sum==targetSum && root.left==null && root.right==null){
             return true;
         }
-        boolean left=check(root.left,sum,target);
-        boolean right=check(root.right,sum,target);
-        if(left || right){
+        boolean left=pathSum(root.left,targetSum,sum);
+        boolean right=pathSum(root.right,targetSum,sum);
+        if(left||right){
             return true;
         }
         return false;
