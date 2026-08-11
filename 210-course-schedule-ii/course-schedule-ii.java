@@ -1,41 +1,38 @@
 class Solution {
     public int[] findOrder(int V, int[][] edges) {
-        List<List<Integer>>adj=new ArrayList<>();
+        int[] ans=new int[V];
+        List<List<Integer>> adj=new ArrayList<>();
+        int[] inD=new int[V];
         for(int i=0;i<V;i++){
             adj.add(new ArrayList<>());
         }
         for(int[] edge:edges){
             int u=edge[0];
             int v=edge[1];
+            inD[u]++;
             adj.get(v).add(u);
         }
-        int[] indegree=new int[V];
+        Queue<Integer> q=new LinkedList<>();
         for(int i=0;i<V;i++){
-            for(int nbr:adj.get(i)){
-                indegree[nbr]++;
-            }
-        }
-        Queue<Integer>q=new LinkedList<>();
-        for(int i=0;i<V;i++){
-            if(indegree[i]==0){
+            if(inD[i]==0){
                 q.offer(i);
             }
         }
-        int[] ans=new int[V];
-        int idx=0;
+        int indx=0;
         while(!q.isEmpty()){
             int node=q.poll();
-            ans[idx++]=node;
+            ans[indx++]=node;
             for(int nbr:adj.get(node)){
-                indegree[nbr]--;
-                if(indegree[nbr]==0){
+                inD[nbr]--;
+                if(inD[nbr]==0){
                     q.offer(nbr);
                 }
             }
         }
-        if(idx!=V){
+        if(indx!=V){
             return new int[]{};
         }
         return ans;
     }
+    
 }
