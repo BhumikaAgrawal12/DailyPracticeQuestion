@@ -18,7 +18,6 @@ class Solution {
             else{
                 if(height[end]>rightmax){
                     rightmax=height[end];
-
                 }
                 else{
                     ans+=rightmax-height[end];
