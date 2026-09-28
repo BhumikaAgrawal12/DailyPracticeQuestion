@@ -15,10 +15,10 @@ class Solution {
                 int temp=matrix[i][s];
                 matrix[i][s]=matrix[i][e];
                 matrix[i][e]=temp;
+
             }
             s++;
             e--;
         }
-        
     }
 }
