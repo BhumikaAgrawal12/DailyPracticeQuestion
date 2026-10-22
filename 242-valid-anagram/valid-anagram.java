@@ -1,19 +1,18 @@
 class Solution {
     public boolean isAnagram(String s, String t) {
-        int m=s.length();
-        int n=t.length();
-        if(m!=n){
+        if(s.length()!=t.length()){
             return false;
         }
-        HashMap<Character,Integer> map1=new HashMap<>();
-        HashMap<Character,Integer> map2=new HashMap<>();
-        for(int i=0;i<m;i++){
-            map1.put(s.charAt(i),map1.getOrDefault(s.charAt(i),0)+1);
+        int[] ch=new int[26];
+        for(int i=0;i<s.length();i++){
+            ch[s.charAt(i)-'a']++;
+            ch[t.charAt(i)-'a']--;
         }
-
-        for(int i=0;i<n;i++){
-            map2.put(t.charAt(i),map2.getOrDefault(t.charAt(i),0)+1);
+        for(int i=0;i<ch.length;i++){
+            if(ch[i]!=0){
+                return false;
+            }
         }
-        return map1.equals(map2);
+        return true;
     }
 }
